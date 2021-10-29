@@ -1,7 +1,11 @@
 import random
 import os
 import sqlite3
+<<<<<<< HEAD
 
+=======
+print()
+>>>>>>> 8e22f8c (Add files via uploadi)
 connect = sqlite3.connect("Task.db")
 curs = connect.cursor()
 

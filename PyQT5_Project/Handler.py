@@ -1,8 +1,6 @@
 import random
 import os
 import sqlite3
-<<<<<<< HEAD
-
 print()
 connect = sqlite3.connect("Task.db")
 curs = connect.cursor()

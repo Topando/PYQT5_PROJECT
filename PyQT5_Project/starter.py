@@ -1,18 +1,18 @@
 from Handler import *
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from StartMenu import Ui_MainWindow
-from ui_file_2 import Ui_SecondWindow
-from open_task import Ui_open_task
-from Settings import Ui_Settings
-from AddTask import Ui_AddTask
+from StartMenuWindow import Ui_StartMenu
+from AnswerWindow import Ui_Answer
+from SettingsWindow import Ui_Settings
+from AddTaskWindow import Ui_AddTask
+from TaskWindow import Ui_Task
 from PyQt5.QtGui import QPixmap
-from decision import Ui_decision
+from DecisionWindow import Ui_decision
 from PIL import Image
 import sys
 
 
 # startmenu
-class MyWidget(QMainWindow, Ui_MainWindow):
+class StartMenuWindow(QMainWindow, Ui_StartMenu):
     def __init__(self):
         self.result = []
         super().__init__()
@@ -27,12 +27,12 @@ class MyWidget(QMainWindow, Ui_MainWindow):
 
     def task(self):
         self.close()
-        self.openTask = TwoWindow()
+        self.openTask = TaskWindow()
         self.openTask.show()
 
     def open_settings(self):
         self.close()
-        self.openSet = Setting()
+        self.openSet = SettingWindow()
         self.openSet.show()
 
     def run(self):
@@ -40,7 +40,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
 
 
 # Task
-class TwoWindow(QMainWindow, Ui_SecondWindow):
+class TaskWindow(QMainWindow, Ui_Task):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -53,17 +53,17 @@ class TwoWindow(QMainWindow, Ui_SecondWindow):
             self.textEdit.setPlainText('некорректный ввод')
         else:
             self.close()
-            self.open_task = Task(str(number_task))
+            self.open_task = AnswerWindow(str(number_task))
             self.open_task.show()
 
     def open_start_menu(self):
         self.close()
-        self.open_start_menu = MyWidget()
+        self.open_start_menu = StartMenuWindow()
         self.open_start_menu.show()
 
 
 # openTask
-class Task(QMainWindow, Ui_open_task):
+class AnswerWindow(QMainWindow, Ui_Answer):
     def __init__(self, number):
         super().__init__()
         self.setupUi(self)
@@ -88,16 +88,16 @@ class Task(QMainWindow, Ui_open_task):
 
     def open_task(self):
         self.close()
-        self.open_task = TwoWindow()
+        self.open_task = TaskWindow()
         self.open_task.show()
 
     def open_decision(self):
         self.close()
-        self.open_decision = Decision(self.number_task)
+        self.open_decision = DecisionWindow(self.number_task)
         self.open_decision.show()
 
 
-class Decision(QMainWindow, Ui_decision):
+class DecisionWindow(QMainWindow, Ui_decision):
     def __init__(self, number_task):
         super().__init__()
         number_task = number_task[:9] + "Res" + number_task[13:]
@@ -118,16 +118,16 @@ class Decision(QMainWindow, Ui_decision):
 
     def open_start_menu(self):
         self.close()
-        self.open_start_menu = MyWidget()
+        self.open_start_menu = StartMenuWindow()
         self.open_start_menu.show()
 
     def open_task(self):
         self.close()
-        self.open_task = TwoWindow()
+        self.open_task = TaskWindow()
         self.open_task.show()
 
 
-class Setting(QMainWindow, Ui_Settings):
+class SettingWindow(QMainWindow, Ui_Settings):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -136,16 +136,16 @@ class Setting(QMainWindow, Ui_Settings):
 
     def open_add_task(self):
         self.close()
-        self.open_add_task = AddTask()
+        self.open_add_task = AddTaskWindow()
         self.open_add_task.show()
 
     def open_start_menu(self):
         self.close()
-        self.open_start_menu = MyWidget()
+        self.open_start_menu = StartMenuWindow()
         self.open_start_menu.show()
 
 
-class AddTask(QMainWindow, Ui_AddTask):
+class AddTaskWindow(QMainWindow, Ui_AddTask):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -154,7 +154,7 @@ class AddTask(QMainWindow, Ui_AddTask):
 
     def open_settings(self):
         self.close()
-        self.open_setting = Setting()
+        self.open_setting = SettingWindow()
         self.open_setting.show()
 
     def add(self):
@@ -168,6 +168,6 @@ class AddTask(QMainWindow, Ui_AddTask):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    w = MyWidget()
+    w = StartMenuWindow()
     w.show()  # открытие 1 окна
     sys.exit(app.exec_())

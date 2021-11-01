@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'untitled_2.ui'
+# Form implementation generated from reading ui file 'TaskWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_SecondWindow(object):
-    def setupUi(self, SecondWindow):
-        SecondWindow.setObjectName("SecondWindow")
-        SecondWindow.resize(477, 286)
-        self.centralwidget = QtWidgets.QWidget(SecondWindow)
+class Ui_Task(object):
+    def setupUi(self, Task):
+        Task.setObjectName("Task")
+        Task.resize(477, 286)
+        self.centralwidget = QtWidgets.QWidget(Task)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(270, 190, 151, 41))
@@ -29,21 +29,21 @@ class Ui_SecondWindow(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(240, 10, 191, 21))
         self.pushButton_2.setObjectName("pushButton_2")
-        SecondWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(SecondWindow)
+        Task.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(Task)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 477, 21))
         self.menubar.setObjectName("menubar")
-        SecondWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(SecondWindow)
+        Task.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(Task)
         self.statusbar.setObjectName("statusbar")
-        SecondWindow.setStatusBar(self.statusbar)
+        Task.setStatusBar(self.statusbar)
 
-        self.retranslateUi(SecondWindow)
-        QtCore.QMetaObject.connectSlotsByName(SecondWindow)
+        self.retranslateUi(Task)
+        QtCore.QMetaObject.connectSlotsByName(Task)
 
-    def retranslateUi(self, SecondWindow):
+    def retranslateUi(self, Task):
         _translate = QtCore.QCoreApplication.translate
-        SecondWindow.setWindowTitle(_translate("SecondWindow", "MainWindow"))
-        self.pushButton.setText(_translate("SecondWindow", "Перейти"))
-        self.label.setText(_translate("SecondWindow", "Введите номер задания"))
-        self.pushButton_2.setText(_translate("SecondWindow", "Главное меню"))
+        Task.setWindowTitle(_translate("Task", "MainWindow"))
+        self.pushButton.setText(_translate("Task", "Перейти"))
+        self.label.setText(_translate("Task", "Введите номер задания"))
+        self.pushButton_2.setText(_translate("Task", "Главное меню"))

@@ -8,27 +8,27 @@ curs = connect.cursor()
 
 def check_gif_task(number):
     result = []
-    Res = os.listdir("Task-Res\Res")
-    Task = os.listdir("Task-Res\Task")
-    Res = list(set(Res) & set(Task))
-    Task[:] = Res[:]
+    array_on_res = os.listdir("Task-Res\Res")
+    array_on_task = os.listdir("Task-Res\Task")
+    array_on_res = list(set(array_on_res) & set(array_on_task))
+    array_on_task[:] = array_on_res[:]
     array = []
-    for i in range(len(Res)):
-        if Res[i].split('.')[0] != number:
+    for i in range(len(array_on_res)):
+        if array_on_res[i].split('.')[0] != number:
             continue
-        array.append(Res[i])
-    Res[:] = array[:]
-    if len(Res) == 0:
+        array.append(array_on_res[i])
+    array_on_res[:] = array[:]
+    if len(array_on_res) == 0:
         return 0
     array = curs.execute(f"""SELECT LinkTask FROM TaskAnswer""").fetchall()
     for i in range(len(array)):
         if array[i][0].split('.')[0] == number:
             result.append(array[i][0])
-    Task = result[random.randint(0, len(result) - 1)]
+    array_on_task = result[random.randint(0, len(result) - 1)]
 
-    Task += ".png"
-    if Task in Res:
-        return Task
+    array_on_task += ".png"
+    if array_on_task in array_on_res:
+        return array_on_task
 
 
 def input_in_db(file_name, user_answer):
@@ -87,3 +87,21 @@ def check(user_answer, file_name):
         answer_value = False
     connect.commit()
     return answer_value
+
+
+def del_in_db(name_task):
+    print(1)
+    all_task = curs.execute(f"""
+                SELECT LinkTask FROM TaskAnswer WHERE id >= 1
+        """).fetchall()
+    all_task = list_link_task(all_task)
+    if name_task in all_task:
+        curs.execute(f"""DELETE FROM TaskAnswer WHERE LinkTask == {name_task}""")
+    connect.commit()
+
+
+def list_link_task(array):
+    result_list = []
+    for i in array:
+        result_list.append(i[0])
+    return result_list

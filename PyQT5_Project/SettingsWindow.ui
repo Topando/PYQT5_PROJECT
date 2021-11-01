@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>480</width>
+    <height>260</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>30</y>
+      <x>160</x>
+      <y>0</y>
       <width>171</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -30,14 +30,40 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>0</y>
-      <width>231</width>
-      <height>23</height>
+      <x>160</x>
+      <y>180</y>
+      <width>171</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Вернуться в главное меню</string>
+     <string>Главное меню</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>40</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Удалить задание</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>80</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Сброс статистики</string>
     </property>
    </widget>
   </widget>
@@ -46,7 +72,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>480</width>
      <height>21</height>
     </rect>
    </property>

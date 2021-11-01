@@ -1,12 +1,12 @@
 import random
 import os
 import sqlite3
-print()
+
 connect = sqlite3.connect("Task.db")
 curs = connect.cursor()
 
 
-def checkAndGifTask(number):
+def check_gif_task(number):
     result = []
     Res = os.listdir("Task-Res\Res")
     Task = os.listdir("Task-Res\Task")
@@ -31,31 +31,59 @@ def checkAndGifTask(number):
         return Task
 
 
-def inputInDB(FileName, Answer):
+def input_in_db(file_name, user_answer):
     number = curs.execute(f"""
-            SELECT id FROM TaskAnswer WHERE LinkTask = {FileName}
+            SELECT id FROM TaskAnswer WHERE LinkTask = {file_name}
     """).fetchall()
     if len(number) == 0:
         curs.execute(f"""
-                INSERT INTO TaskAnswer(LinkTask, AnswerTask) VALUES({FileName}, {Answer})
+                INSERT INTO TaskAnswer(LinkTask, AnswerTask) VALUES({file_name}, {user_answer})
                 """)
     else:
         curs.execute(f"""DELETE FROM TaskAnswer WHERE id == {number[0][0]}""")
         curs.execute(f"""
-                INSERT INTO TaskAnswer(LinkTask, AnswerTask) VALUES({FileName}, {Answer})
+                INSERT INTO TaskAnswer(LinkTask, AnswerTask) VALUES({file_name}, {user_answer})
                 """)
     connect.commit()
 
 
-def Check(answerUser, FileName):
-    FileName = FileName[14:len(FileName) - 4]
-    realAnswer = curs.execute(f"""
-                SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {FileName}
+def if_db_is_clear():
+    curs.execute(f"""
+                    INSERT INTO Statistics(number_of_tasks, correct_answer, incorrect_answer) VALUES(0, 0, 0)
+                    """)
+    connect.commit()
+
+
+def take_values():
+    first_id = curs.execute(f"""
+                SELECT * FROM Statistics WHERE id = 1
+        """).fetchall()[0]
+    return first_id
+
+
+def check(user_answer, file_name):
+    file_name = file_name[14:len(file_name) - 4]
+    real_answer = curs.execute(f"""
+                SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {file_name}
         """).fetchall()[0][0]
-
-    if str(realAnswer) == str(answerUser):
+    check_len_db = curs.execute(f"""
+                SELECT * FROM Statistics
+        """).fetchall()
+    if len(check_len_db) == 0:
+        if_db_is_clear()
+    curs.execute(f"""
+            UPDATE Statistics SET number_of_tasks = {take_values()[1] + 1} WHERE id = 1
+            """)
+    if str(real_answer) == str(user_answer):
         curs.execute(f"""
-                INSERT INTO Statistics(ALL, Tr, Fa) VALUES(0, 0, 0)
+                UPDATE Statistics SET correct_answer = {take_values()[2] + 1} WHERE id = 1
                 """)
+        answer_value = True
 
+    else:
+        curs.execute(f"""
+                UPDATE Statistics SET incorrect_answer = {take_values()[3] + 1} WHERE id = 1
+                """)
+        answer_value = False
     connect.commit()
+    return answer_value

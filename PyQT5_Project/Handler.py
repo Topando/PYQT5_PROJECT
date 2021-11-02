@@ -1,6 +1,9 @@
 import random
 import os
 import sqlite3
+from PyQt5.QtGui import QPixmap
+from PIL import Image
+from Variables import *
 
 connect = sqlite3.connect("Task.db")
 curs = connect.cursor()
@@ -28,7 +31,7 @@ def check_gif_task(number):
 
     array_on_task += ".png"
     if array_on_task in array_on_res:
-        return array_on_task
+        return array_on_task.split('.png')[0]
 
 
 def input_in_db(file_name, user_answer):
@@ -70,10 +73,11 @@ def take_values():
 
 
 def check(user_answer, file_name):
-    file_name = file_name[14:len(file_name) - 4]
+    print(file_name, 1)
     real_answer = curs.execute(f"""
                 SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {file_name}
         """).fetchall()[0][0]
+    print(real_answer)
     curs.execute(f"""
             UPDATE Statistics SET number_of_tasks = {take_values()[1] + 1} WHERE id = 1
             """)
@@ -126,13 +130,11 @@ def add_in_option_db():
     for i in range(1, 20):
         name_task = check_gif_task(int(i))
         if name_task != 0 and int(i) == int(name_task.split('.')[0]):
-            print(1)
             answer_img = curs.execute(f"""
-                SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {str(name_task.split('.png')[0])}
+                SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {str(name_task)}
         """).fetchall()[0][0]
-            print(print(answer_img))
             curs.execute(f"""
-                            INSERT INTO Option(name_img, answer_img, user_answer) VALUES({name_task.split(".png")[0]}, {str(answer_img)}, 0)
+                            INSERT INTO Option(name_img, answer_img, user_answer) VALUES({name_task}, {str(answer_img)}, 0)
                             """)
     connect.commit()
 
@@ -146,8 +148,36 @@ def check_len_option_db():
     check_len = curs.execute(f"""
                 SELECT * FROM Option
         """).fetchall()
-    print(1, len(check_len))
     if len(check_len) == 0:
         add_in_option_db()
     else:
         return
+
+
+def picture_on_lable(self, link):
+    link_task = link + ".png"
+    width = self.label.width()
+    height = self.label.height()
+    image = Image.open(link_task)
+    size = (width, height)
+    im = image.resize(size)
+    im.save(link_task)
+    self.pixmap = QPixmap(link_task)
+    self.image = self.label
+    self.image.setPixmap(self.pixmap)
+
+
+def giv_link_picture(name_task, directory):
+    print(name_file.format(directory, name_task))
+    return name_file.format(directory, name_task)
+
+
+def giv_name_task(name_task):
+
+    name_task = curs.execute(f"""
+                SELECT name_img FROM Option WHERE id = {name_task}
+        """).fetchall()
+    if len(name_task) == 0:
+        return incorrect_answer
+    else:
+        return name_task[0][0]

@@ -1,22 +1,21 @@
 from Handler import *
+from Interface import *
 from PyQt5.QtWidgets import QApplication, QMainWindow, QButtonGroup
-from StartMenuWindow import Ui_StartMenu
-from AnswerWindow import Ui_Answer
-from SettingsWindow import Ui_Settings
-from AddTaskWindow import Ui_AddTask
-from TaskWindow import Ui_Task
-from PyQt5.QtGui import QPixmap
-from DecisionWindow import Ui_decision
-from CorrectAnswerWindow import Ui_CorrectAnswer
-from InCorrectAnswerWindow import Ui_InCorrectAnswer
-from DelTaskWindow import Ui_DelTask
-from StatisticsWindow import Ui_Statistics
-from ResetStatisticsWindow import Ui_ResetStatistics
-from StartOptionWindow import Ui_StartOption
-from FirstAnswerOptionWindow import Ui_FirstAnswerOption
-from SecondAnswerOptionWindow import Ui_SecondAnswerOption
-from AnswerOptionWindow import Ui_AnswerOption
-from PIL import Image
+from Interface.StartMenuWindow import Ui_StartMenu
+from Interface.AnswerWindow import Ui_Answer
+from Interface.SettingsWindow import Ui_Settings
+from Interface.AddTaskWindow import Ui_AddTask
+from Interface.TaskWindow import Ui_Task
+from Interface.DecisionWindow import Ui_decision
+from Interface.CorrectAnswerWindow import Ui_CorrectAnswer
+from Interface.InCorrectAnswerWindow import Ui_InCorrectAnswer
+from Interface.DelTaskWindow import Ui_DelTask
+from Interface.StatisticsWindow import Ui_Statistics
+from Interface.ResetStatisticsWindow import Ui_ResetStatistics
+from Interface.StartOptionWindow import Ui_StartOption
+from Interface.FirstAnswerOptionWindow import Ui_FirstAnswerOption
+from Interface.SecondAnswerOptionWindow import Ui_SecondAnswerOption
+from Interface.AnswerOptionWindow import Ui_AnswerOption
 
 
 # startmenu
@@ -84,15 +83,15 @@ class AnswerWindow(QMainWindow, Ui_Answer):
     def __init__(self, number):
         super().__init__()
         self.setupUi(self)
-        self.number_task = "Task-Res\Task\{}".format(number)
-        self.picture_on_lable(self.number_task)
+        self.number = number
+        self.number_task = giv_link_picture(number, "Task")
+        picture_on_lable(self, self.number_task)
         self.pushButton_3.clicked.connect(self.open_task)
         self.pushButton.clicked.connect(self.check_answer)
         self.pushButton_2.clicked.connect(self.open_decision)
-        self.number = number
 
     def check_answer(self):
-        answer_value = check(self.textEdit.toPlainText(), self.number_task)
+        answer_value = check(self.textEdit.toPlainText(), self.number)
         if answer_value:
             self.open_correct_window()
         else:
@@ -107,18 +106,6 @@ class AnswerWindow(QMainWindow, Ui_Answer):
         self.close()
         self.open_incorrect_answer = InCorrectAnswerWindow(self.number)
         self.open_incorrect_answer.show()
-
-    def picture_on_lable(self, link):
-        link_task = link
-        width = self.label.width()
-        height = self.label.height()
-        image = Image.open(link_task)
-        size = (width, height)
-        im = image.resize(size)
-        im.save(link_task)
-        self.pixmap = QPixmap(link_task)
-        self.image = self.label
-        self.image.setPixmap(self.pixmap)
 
     def open_task(self):
         self.close()
@@ -164,7 +151,7 @@ class InCorrectAnswerWindow(QMainWindow, Ui_InCorrectAnswer):
         self.pushButton_3.clicked.connect(self.open_answer_window)
         self.pushButton_4.clicked.connect(self.open_decision_window)
         self.task = task
-        self.link_task = "Task-Res\Task\{}".format(task)
+        self.link_task = giv_link_picture(task, "Task")
 
     def open_start_window(self):
         self.close()
@@ -191,23 +178,11 @@ class DecisionWindow(QMainWindow, Ui_decision):
     def __init__(self, number_task):
         super().__init__()
         number_task = number_task[:9] + "Res" + number_task[13:]
+        print(number_task)
         self.setupUi(self)
-        self.picture_on_lable(number_task)
+        picture_on_lable(self, number_task)
         self.pushButton.clicked.connect(self.open_task)
         self.pushButton_2.clicked.connect(self.open_start_menu)
-
-    def picture_on_lable(self, link):
-        link_task = link
-        width = self.label.width()
-        height = self.label.height()
-        image = Image.open(link_task)
-        size = (width, height)
-
-        im = image.resize(size)
-        im.save(link_task)
-        self.pixmap = QPixmap(link_task)
-        self.image = self.label
-        self.image.setPixmap(self.pixmap)
 
     def open_start_menu(self):
         self.close()
@@ -372,8 +347,9 @@ class FirstAnswerWindow(QMainWindow, Ui_FirstAnswerOption):
         self.open_second_answer.show()
 
     def open_answer_option_window(self):
+        name = self.sender().text()
         self.close()
-        self.open_answer_option = AnswerOptionWindow(1)
+        self.open_answer_option = AnswerOptionWindow(1, name.split()[1])
         self.open_answer_option.show()
 
 
@@ -399,15 +375,24 @@ class SecondAnswerWindow(QMainWindow, Ui_SecondAnswerOption):
         self.open_first_answer.show()
 
     def open_answer_option_window(self):
+        name = self.sender().text()
         self.close()
-        self.open_answer_option = AnswerOptionWindow(2)
+        self.open_answer_option = AnswerOptionWindow(2, name.split()[1])
         self.open_answer_option.show()
 
 
 class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
-    def __init__(self, number_window):
+    def __init__(self, number_window, name_task):
         super().__init__()
         self.setupUi(self)
+        name_task = giv_name_task(name_task)
+        print(name_task)
+        if name_task == incorrect_answer:
+            self.label.setText(incorrect_answer)
+            self.textEdit.setReadOnly(True)
+            self.pushButton.setEnabled(False)
+        else:
+            picture_on_lable(self, giv_link_picture(name_task, "Task"))
         if number_window == 1:
             self.pushButton_2.clicked.connect(self.open_fisrt_answer_window)
         elif number_window == 2:

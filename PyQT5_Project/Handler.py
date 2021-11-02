@@ -14,7 +14,7 @@ def check_gif_task(number):
     array_on_task[:] = array_on_res[:]
     array = []
     for i in range(len(array_on_res)):
-        if array_on_res[i].split('.')[0] != number:
+        if array_on_res[i].split('.')[0] != str(number):
             continue
         array.append(array_on_res[i])
     array_on_res[:] = array[:]
@@ -22,7 +22,7 @@ def check_gif_task(number):
         return 0
     array = curs.execute(f"""SELECT LinkTask FROM TaskAnswer""").fetchall()
     for i in range(len(array)):
-        if array[i][0].split('.')[0] == number:
+        if array[i][0].split('.')[0] == str(number):
             result.append(array[i][0])
     array_on_task = result[random.randint(0, len(result) - 1)]
 
@@ -120,3 +120,34 @@ def getting_statistics():
 def reset_all_statistics():
     curs.execute(f"""DELETE FROM Statistics WHERE id == 1""")
     connect.commit()
+
+
+def add_in_option_db():
+    for i in range(1, 20):
+        name_task = check_gif_task(int(i))
+        if name_task != 0 and int(i) == int(name_task.split('.')[0]):
+            print(1)
+            answer_img = curs.execute(f"""
+                SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {str(name_task.split('.png')[0])}
+        """).fetchall()[0][0]
+            print(print(answer_img))
+            curs.execute(f"""
+                            INSERT INTO Option(name_img, answer_img, user_answer) VALUES({name_task.split(".png")[0]}, {str(answer_img)}, 0)
+                            """)
+    connect.commit()
+
+
+def clear_option_db():
+    curs.execute(f"""DELETE FROM Option WHERE id >= 1""")
+    connect.commit()
+
+
+def check_len_option_db():
+    check_len = curs.execute(f"""
+                SELECT * FROM Option
+        """).fetchall()
+    print(1, len(check_len))
+    if len(check_len) == 0:
+        add_in_option_db()
+    else:
+        return

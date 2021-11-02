@@ -1,5 +1,5 @@
 from Handler import *
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QButtonGroup
 from StartMenuWindow import Ui_StartMenu
 from AnswerWindow import Ui_Answer
 from SettingsWindow import Ui_Settings
@@ -12,6 +12,10 @@ from InCorrectAnswerWindow import Ui_InCorrectAnswer
 from DelTaskWindow import Ui_DelTask
 from StatisticsWindow import Ui_Statistics
 from ResetStatisticsWindow import Ui_ResetStatistics
+from StartOptionWindow import Ui_StartOption
+from FirstAnswerOptionWindow import Ui_FirstAnswerOption
+from SecondAnswerOptionWindow import Ui_SecondAnswerOption
+from AnswerOptionWindow import Ui_AnswerOption
 from PIL import Image
 
 
@@ -22,9 +26,10 @@ class StartMenuWindow(QMainWindow, Ui_StartMenu):
         super().__init__()
         self.setupUi(self)  # Загружаем дизайн
         check_len_db()
+        clear_option_db()
         self.pushButton.clicked.connect(self.open_task)
 
-        self.pushButton_2.clicked.connect(self.run)
+        self.pushButton_2.clicked.connect(self.open_start_option_window)
 
         self.pushButton_4.clicked.connect(self.open_statistics_window)
 
@@ -40,8 +45,10 @@ class StartMenuWindow(QMainWindow, Ui_StartMenu):
         self.open_setting = SettingWindow()
         self.open_setting.show()
 
-    def run(self):
-        pass
+    def open_start_option_window(self):
+        self.close()
+        self.start_option = StartOptionWindow()
+        self.start_option.show()
 
     def open_statistics_window(self):
         self.close()
@@ -131,7 +138,6 @@ class CorrectAnswerWindow(QMainWindow, Ui_CorrectAnswer):
         self.pushButton.clicked.connect(self.open_start_window)
         self.pushButton_2.clicked.connect(self.open_task_window)
         self.pushButton_3.clicked.connect(self.open_statistics_window)
-
 
     def open_start_window(self):
         self.close()
@@ -322,3 +328,106 @@ class StatisticsWindow(QMainWindow, Ui_Statistics):
         self.close()
         self.open_start_menu = StartMenuWindow()
         self.open_start_menu.show()
+
+
+class StartOptionWindow(QMainWindow, Ui_StartOption):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.pushButton_2.clicked.connect(self.open_start_menu_window)
+        self.pushButton.clicked.connect(self.open_fisrt_answer_window)
+
+    def open_start_menu_window(self):
+        self.close()
+        self.open_start_menu = StartMenuWindow()
+        self.open_start_menu.show()
+
+    def open_fisrt_answer_window(self):
+        self.close()
+        self.open_first_answer = FirstAnswerWindow()
+        self.open_first_answer.show()
+
+
+class FirstAnswerWindow(QMainWindow, Ui_FirstAnswerOption):
+    def __init__(self):
+        super().__init__()
+
+        self.setupUi(self)
+        self.radioButton_2.clicked.connect(self.open_second_answer_window)
+        self.pushButton.clicked.connect(self.open_answer_option_window)
+        self.pushButton_2.clicked.connect(self.open_answer_option_window)
+        self.pushButton_3.clicked.connect(self.open_answer_option_window)
+        self.pushButton_4.clicked.connect(self.open_answer_option_window)
+        self.pushButton_5.clicked.connect(self.open_answer_option_window)
+        self.pushButton_6.clicked.connect(self.open_answer_option_window)
+        self.pushButton_7.clicked.connect(self.open_answer_option_window)
+        self.pushButton_8.clicked.connect(self.open_answer_option_window)
+        self.pushButton_9.clicked.connect(self.open_answer_option_window)
+        self.pushButton_10.clicked.connect(self.open_answer_option_window)
+        check_len_option_db()
+
+    def open_second_answer_window(self):
+        self.close()
+        self.open_second_answer = SecondAnswerWindow()
+        self.open_second_answer.show()
+
+    def open_answer_option_window(self):
+        self.close()
+        self.open_answer_option = AnswerOptionWindow(1)
+        self.open_answer_option.show()
+
+
+class SecondAnswerWindow(QMainWindow, Ui_SecondAnswerOption):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.pushButton.clicked.connect(self.open_answer_option_window)
+        self.pushButton_2.clicked.connect(self.open_answer_option_window)
+        self.pushButton_3.clicked.connect(self.open_answer_option_window)
+        self.pushButton_4.clicked.connect(self.open_answer_option_window)
+        self.pushButton_5.clicked.connect(self.open_answer_option_window)
+        self.pushButton_6.clicked.connect(self.open_answer_option_window)
+        self.pushButton_7.clicked.connect(self.open_answer_option_window)
+        self.pushButton_8.clicked.connect(self.open_answer_option_window)
+        self.pushButton_9.clicked.connect(self.open_answer_option_window)
+
+        self.radioButton.clicked.connect(self.open_fisrt_answer_window)
+
+    def open_fisrt_answer_window(self):
+        self.close()
+        self.open_first_answer = FirstAnswerWindow()
+        self.open_first_answer.show()
+
+    def open_answer_option_window(self):
+        self.close()
+        self.open_answer_option = AnswerOptionWindow(2)
+        self.open_answer_option.show()
+
+
+class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
+    def __init__(self, number_window):
+        super().__init__()
+        self.setupUi(self)
+        if number_window == 1:
+            self.pushButton_2.clicked.connect(self.open_fisrt_answer_window)
+        elif number_window == 2:
+            self.pushButton_2.clicked.connect(self.open_second_answer_window)
+
+    def check_back_window(self):
+        answer_window = FirstAnswerWindow()
+        radio_button = answer_window.radioButton.isChecked()
+        print(radio_button)
+        if radio_button:
+            return True
+        else:
+            return False
+
+    def open_fisrt_answer_window(self):
+        self.close()
+        self.open_first_answer = FirstAnswerWindow()
+        self.open_first_answer.show()
+
+    def open_second_answer_window(self):
+        self.close()
+        self.open_second_answer = SecondAnswerWindow()
+        self.open_second_answer.show()

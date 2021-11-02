@@ -53,7 +53,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Чтобы добавить новое задание вы должны добавть в папки Task и Res, соответственно, фото задания и решения. &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;Важно&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; чтобы файлы имели ОДИНАКОВОЕ и цифра до точки означала номер задания название&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;иначе программа перестанет функционировать&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Чтобы добавить новое задание вы должны добавть в папки Task и Res, соответственно, фото задания и решения. &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;Важно&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; чтобы файлы имели ОДИНАКОВОЕ и цифра до точки означала номер задания название, формат &lt;/span&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;СТРОГО&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; PNG&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;иначе программа перестанет функционировать&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">

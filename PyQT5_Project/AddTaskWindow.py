@@ -62,7 +62,7 @@ class Ui_AddTask(object):
         _translate = QtCore.QCoreApplication.translate
         AddTask.setWindowTitle(_translate("AddTask", "MainWindow"))
         self.label.setText(_translate("AddTask", "Введите название файла (без расширения)"))
-        self.label_2.setText(_translate("AddTask", "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Чтобы добавить новое задание вы должны добавть в папки Task и Res, соответственно, фото задания и решения. </span></p><p align=\"center\"><span style=\" font-size:11pt; color:#ff0000;\">Важно</span><span style=\" font-size:11pt;\"> чтобы файлы имели ОДИНАКОВОЕ и цифра до точки означала номер задания название</span></p><p align=\"center\"><span style=\" font-size:11pt;\">иначе программа перестанет функционировать</span></p></body></html>"))
+        self.label_2.setText(_translate("AddTask", "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Чтобы добавить новое задание вы должны добавть в папки Task и Res, соответственно, фото задания и решения. </span></p><p align=\"center\"><span style=\" font-size:11pt; color:#ff0000;\">Важно</span><span style=\" font-size:11pt;\"> чтобы файлы имели ОДИНАКОВОЕ и цифра до точки означала номер задания название, формат </span><span style=\" font-size:11pt; color:#ff0000;\">СТРОГО</span><span style=\" font-size:11pt;\"> PNG</span></p><p align=\"center\"><span style=\" font-size:11pt;\">иначе программа перестанет функционировать</span></p></body></html>"))
         self.label_3.setText(_translate("AddTask", "Введите ответ к этому заданию"))
         self.pushButton.setText(_translate("AddTask", "Записать"))
         self.pushButton_2.setText(_translate("AddTask", "Вернуться на предыдущую страницу"))

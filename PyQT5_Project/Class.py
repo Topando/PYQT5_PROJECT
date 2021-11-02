@@ -128,8 +128,8 @@ class CorrectAnswerWindow(QMainWindow, Ui_CorrectAnswer):
 
     def open_start_window(self):
         self.close()
-        self.open_start_menu = StartMenuWindow()
-        self.open_start_menu.show()
+        self.open_window = StartMenuWindow()
+        self.open_window.show()
 
     def open_task_window(self):
         self.close()

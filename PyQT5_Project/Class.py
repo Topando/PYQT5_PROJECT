@@ -10,6 +10,8 @@ from DecisionWindow import Ui_decision
 from CorrectAnswerWindow import Ui_CorrectAnswer
 from InCorrectAnswerWindow import Ui_InCorrectAnswer
 from DelTaskWindow import Ui_DelTask
+from StatisticsWindow import Ui_Statistics
+from ResetStatisticsWindow import Ui_ResetStatistics
 from PIL import Image
 
 
@@ -19,11 +21,12 @@ class StartMenuWindow(QMainWindow, Ui_StartMenu):
         self.result = []
         super().__init__()
         self.setupUi(self)  # Загружаем дизайн
+        check_len_db()
         self.pushButton.clicked.connect(self.open_task)
 
         self.pushButton_2.clicked.connect(self.run)
 
-        self.pushButton_4.clicked.connect(self.run)
+        self.pushButton_4.clicked.connect(self.open_statistics_window)
 
         self.pushButton_3.clicked.connect(self.open_settings)
 
@@ -39,6 +42,11 @@ class StartMenuWindow(QMainWindow, Ui_StartMenu):
 
     def run(self):
         pass
+
+    def open_statistics_window(self):
+        self.close()
+        self.open_statistics = StatisticsWindow()
+        self.open_statistics.show()
 
 
 # Task
@@ -95,8 +103,10 @@ class AnswerWindow(QMainWindow, Ui_Answer):
 
     def picture_on_lable(self, link):
         link_task = link
+        width = self.label.width()
+        height = self.label.height()
         image = Image.open(link_task)
-        size = (701, 431)
+        size = (width, height)
         im = image.resize(size)
         im.save(link_task)
         self.pixmap = QPixmap(link_task)
@@ -120,6 +130,8 @@ class CorrectAnswerWindow(QMainWindow, Ui_CorrectAnswer):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.open_start_window)
         self.pushButton_2.clicked.connect(self.open_task_window)
+        self.pushButton_3.clicked.connect(self.open_statistics_window)
+
 
     def open_start_window(self):
         self.close()
@@ -132,7 +144,9 @@ class CorrectAnswerWindow(QMainWindow, Ui_CorrectAnswer):
         self.open_task.show()
 
     def open_statistics_window(self):
-        pass
+        self.close()
+        self.open_statistics = StatisticsWindow()
+        self.open_statistics.show()
 
 
 class InCorrectAnswerWindow(QMainWindow, Ui_InCorrectAnswer):
@@ -178,8 +192,11 @@ class DecisionWindow(QMainWindow, Ui_decision):
 
     def picture_on_lable(self, link):
         link_task = link
+        width = self.label.width()
+        height = self.label.height()
         image = Image.open(link_task)
-        size = (771, 451)
+        size = (width, height)
+
         im = image.resize(size)
         im.save(link_task)
         self.pixmap = QPixmap(link_task)
@@ -204,6 +221,7 @@ class SettingWindow(QMainWindow, Ui_Settings):
         self.pushButton.clicked.connect(self.open_add_task)
         self.pushButton_2.clicked.connect(self.open_start_menu)
         self.pushButton_3.clicked.connect(self.open_del_task_window)
+        self.pushButton_4.clicked.connect(self.open_reset_statistics_window)
 
     def open_add_task(self):
         self.close()
@@ -219,6 +237,11 @@ class SettingWindow(QMainWindow, Ui_Settings):
         self.close()
         self.open_del_task = DelTaskWindow()
         self.open_del_task.show()
+
+    def open_reset_statistics_window(self):
+        self.close()
+        self.open_reset_statistics = ResetStatisticsWindow()
+        self.open_reset_statistics.show()
 
 
 class AddTaskWindow(QMainWindow, Ui_AddTask):
@@ -249,7 +272,6 @@ class DelTaskWindow(QMainWindow, Ui_DelTask):
         self.pushButton_2.clicked.connect(self.open_settings_window)
         self.pushButton.clicked.connect(self.del_task)
 
-
     def del_task(self):
         del_in_db(self.textEdit.toPlainText())
         self.textEdit.setPlainText("Удалено")
@@ -258,3 +280,45 @@ class DelTaskWindow(QMainWindow, Ui_DelTask):
         self.close()
         self.open_setting = SettingWindow()
         self.open_setting.show()
+
+
+class ResetStatisticsWindow(QMainWindow, Ui_ResetStatistics):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.pushButton_2.clicked.connect(self.open_settings_window)
+        self.pushButton.clicked.connect(self.reset_statistics)
+
+    def reset_statistics(self):
+        reset_all_statistics()
+
+    def open_settings_window(self):
+        self.close()
+        self.open_setting = SettingWindow()
+        self.open_setting.show()
+
+
+class StatisticsWindow(QMainWindow, Ui_Statistics):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.get_statistics()
+        self.pushButton.clicked.connect(self.open_start_menu_window)
+
+    def get_statistics(self):
+        all_information = getting_statistics()
+        number_of_tasks = all_information[1]
+        correct_answer = all_information[2]
+        incorrect_answer = all_information[3]
+        self.textEdit.setPlainText(str(number_of_tasks))
+        self.textEdit_2.setPlainText(str(correct_answer))
+        self.textEdit_3.setPlainText(str(incorrect_answer))
+        if incorrect_answer != 0:
+            self.textEdit_4.setPlainText(str(round(correct_answer / number_of_tasks, 2)))
+        else:
+            self.textEdit_4.setPlainText(str(correct_answer / 1))
+
+    def open_start_menu_window(self):
+        self.close()
+        self.open_start_menu = StartMenuWindow()
+        self.open_start_menu.show()

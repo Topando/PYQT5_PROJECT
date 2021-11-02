@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>decision</class>
- <widget class="QMainWindow" name="decision">
+ <class>ResetStatistics</class>
+ <widget class="QMainWindow" name="ResetStatistics">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>487</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="font">
@@ -23,40 +23,51 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>781</width>
-      <height>481</height>
+      <x>0</x>
+      <y>30</y>
+      <width>491</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Если вы нажмете на кнопку, то вся статистика сбросится&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>500</y>
-      <width>281</width>
+      <x>140</x>
+      <y>80</y>
+      <width>221</width>
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
     <property name="text">
-     <string>Вернуться к выбору задач</string>
+     <string>Сброс</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>500</y>
-      <width>281</width>
-      <height>41</height>
+      <x>230</x>
+      <y>0</y>
+      <width>261</width>
+      <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Вернуться в главное меню</string>
+     <string>Вернуться на предыдущую страницу</string>
     </property>
    </widget>
   </widget>
@@ -65,7 +76,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>487</width>
      <height>25</height>
     </rect>
    </property>

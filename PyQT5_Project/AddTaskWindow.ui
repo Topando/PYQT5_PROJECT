@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>795</width>
+    <width>798</width>
     <height>313</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Times New Roman</family>
+    <pointsize>12</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -18,19 +24,19 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>100</y>
-      <width>241</width>
-      <height>61</height>
+      <y>120</y>
+      <width>301</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Введите название файла без его расширения</string>
+     <string>Введите название файла (без расширения)</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>300</x>
       <y>120</y>
       <width>181</width>
       <height>31</height>
@@ -40,23 +46,23 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>-10</y>
-      <width>781</width>
-      <height>121</height>
+      <x>0</x>
+      <y>30</y>
+      <width>791</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Чтобы добавить новое задание вы должны добавть в папки Task и Res, соответственно, фото задания и решения. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Важно&lt;/span&gt; чтобы файлы имели ОДИНАКОВОЕ название иначе программа перестанет функционировать&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Чтобы добавить новое задание вы должны добавть в папки Task и Res, соответственно, фото задания и решения. &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;Важно&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; чтобы файлы имели ОДИНАКОВОЕ и цифра до точки означала номер задания название&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;иначе программа перестанет функционировать&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>180</y>
+      <x>60</x>
+      <y>170</y>
       <width>231</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -66,7 +72,7 @@
    <widget class="QTextEdit" name="textEdit_2">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>300</x>
       <y>170</y>
       <width>181</width>
       <height>31</height>
@@ -89,11 +95,17 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>540</x>
       <y>0</y>
-      <width>211</width>
+      <width>261</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Вернуться на предыдущую страницу</string>
@@ -105,8 +117,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>795</width>
-     <height>21</height>
+     <width>798</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

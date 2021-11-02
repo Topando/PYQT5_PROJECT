@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>286</height>
+    <width>461</width>
+    <height>214</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Times New Roman</family>
+    <pointsize>12</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -17,24 +23,32 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>190</y>
-      <width>151</width>
+      <x>130</x>
+      <y>120</y>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Перейти</string>
+     <string>Перейти к выполнению</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
-      <width>141</width>
+      <y>60</y>
+      <width>201</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Sans Serif</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
     </property>
     <property name="text">
      <string>Введите номер задания</string>
@@ -43,8 +57,8 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>110</y>
+      <x>220</x>
+      <y>70</y>
       <width>241</width>
       <height>31</height>
      </rect>
@@ -53,9 +67,9 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>10</y>
-      <width>191</width>
+      <x>250</x>
+      <y>0</y>
+      <width>211</width>
       <height>21</height>
      </rect>
     </property>
@@ -69,8 +83,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>477</width>
-     <height>21</height>
+     <width>461</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

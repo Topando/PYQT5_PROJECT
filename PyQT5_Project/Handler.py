@@ -54,6 +54,14 @@ def if_db_is_clear():
     connect.commit()
 
 
+def check_len_db():
+    check_len = curs.execute(f"""
+                SELECT * FROM Statistics
+        """).fetchall()
+    if len(check_len) == 0:
+        if_db_is_clear()
+
+
 def take_values():
     first_id = curs.execute(f"""
                 SELECT * FROM Statistics WHERE id = 1
@@ -66,11 +74,6 @@ def check(user_answer, file_name):
     real_answer = curs.execute(f"""
                 SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {file_name}
         """).fetchall()[0][0]
-    check_len_db = curs.execute(f"""
-                SELECT * FROM Statistics
-        """).fetchall()
-    if len(check_len_db) == 0:
-        if_db_is_clear()
     curs.execute(f"""
             UPDATE Statistics SET number_of_tasks = {take_values()[1] + 1} WHERE id = 1
             """)
@@ -105,3 +108,15 @@ def list_link_task(array):
     for i in array:
         result_list.append(i[0])
     return result_list
+
+
+def getting_statistics():
+    all_information = curs.execute(f"""
+                SELECT * FROM Statistics WHERE id = 1
+        """).fetchall()[0]
+    return all_information
+
+
+def reset_all_statistics():
+    curs.execute(f"""DELETE FROM Statistics WHERE id == 1""")
+    connect.commit()

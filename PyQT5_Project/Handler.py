@@ -27,6 +27,8 @@ def check_gif_task(number):
     for i in range(len(array)):
         if array[i][0].split('.')[0] == str(number):
             result.append(array[i][0])
+    if len(result) == 0:
+        return 0
     array_on_task = result[random.randint(0, len(result) - 1)]
 
     array_on_task += ".png"
@@ -134,7 +136,7 @@ def add_in_option_db():
                 SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {str(name_task)}
         """).fetchall()[0][0]
             curs.execute(f"""
-                            INSERT INTO Option(name_img, answer_img, user_answer) VALUES({name_task}, {str(answer_img)}, 0)
+                            INSERT INTO Option(id, name_img, answer_img, user_answer) VALUES({name_task.split('.')[0]}, {name_task}, {str(answer_img)}, '')
                             """)
     connect.commit()
 
@@ -159,7 +161,7 @@ def picture_on_lable(self, link):
     width = self.label.width()
     height = self.label.height()
     image = Image.open(link_task)
-    size = (width, height)
+    size = (width, height - 100)
     im = image.resize(size)
     im.save(link_task)
     self.pixmap = QPixmap(link_task)
@@ -177,7 +179,17 @@ def giv_name_task(name_task):
     name_task = curs.execute(f"""
                 SELECT name_img FROM Option WHERE id = {name_task}
         """).fetchall()
+    print(name_task)
     if len(name_task) == 0:
         return incorrect_answer
     else:
         return name_task[0][0]
+
+def record_answer(text, name_task):
+    print(name_task)
+    print(text)
+    curs.execute(f"""
+            UPDATE Option SET user_answer = {str(text)} WHERE id = {int(name_task)}
+            """)
+    print(1)
+    connect.commit()

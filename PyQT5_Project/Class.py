@@ -385,31 +385,35 @@ class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
     def __init__(self, number_window, name_task):
         super().__init__()
         self.setupUi(self)
-        name_task = giv_name_task(name_task)
-        print(name_task)
-        if name_task == incorrect_answer:
+        self.link_task = giv_name_task(name_task)
+        self.name_task = name_task
+        print(self.link_task)
+        if self.link_task == incorrect_answer:
             self.label.setText(incorrect_answer)
             self.textEdit.setReadOnly(True)
             self.pushButton.setEnabled(False)
         else:
-            picture_on_lable(self, giv_link_picture(name_task, "Task"))
+            picture_on_lable(self, giv_link_picture(self.link_task, "Task"))
+
         if number_window == 1:
             self.pushButton_2.clicked.connect(self.open_fisrt_answer_window)
         elif number_window == 2:
             self.pushButton_2.clicked.connect(self.open_second_answer_window)
+        self.pushButton.clicked.connect(self.record_user_answer)
 
-    def check_back_window(self):
-        answer_window = FirstAnswerWindow()
-        radio_button = answer_window.radioButton.isChecked()
-        print(radio_button)
-        if radio_button:
-            return True
+    def record_user_answer(self):
+        text = self.textEdit.toPlainText()
+        print(text)
+        if text.isdigit() is False:
+            self.textEdit.setText(incorrect_answer_option)
         else:
-            return False
+            record_answer(text, self.name_task)
+            self.textEdit.setText(correct_answer_option)
 
     def open_fisrt_answer_window(self):
         self.close()
         self.open_first_answer = FirstAnswerWindow()
+        self.label.setText(correct_answer_option)
         self.open_first_answer.show()
 
     def open_second_answer_window(self):

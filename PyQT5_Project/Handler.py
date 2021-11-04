@@ -4,6 +4,23 @@ import sqlite3
 from PyQt5.QtGui import QPixmap
 from PIL import Image
 from Variables import *
+from PyQt5.QtWidgets import QApplication, QMainWindow, QButtonGroup
+from Interface.StartMenuWindow import Ui_StartMenu
+from Interface.AnswerWindow import Ui_Answer
+from Interface.SettingsWindow import Ui_Settings
+from Interface.AddTaskWindow import Ui_AddTask
+from Interface.TaskWindow import Ui_Task
+from Interface.DecisionWindow import Ui_decision
+from Interface.CorrectAnswerWindow import Ui_CorrectAnswer
+from Interface.InCorrectAnswerWindow import Ui_InCorrectAnswer
+from Interface.DelTaskWindow import Ui_DelTask
+from Interface.StatisticsWindow import Ui_Statistics
+from Interface.ResetStatisticsWindow import Ui_ResetStatistics
+from Interface.StartOptionWindow import Ui_StartOption
+from Interface.FirstAnswerOptionWindow import Ui_FirstAnswerOption
+from Interface.SecondAnswerOptionWindow import Ui_SecondAnswerOption
+from Interface.AnswerOptionWindow import Ui_AnswerOption
+from Interface.ResultOptionWindow import Ui_ResultOption
 
 connect = sqlite3.connect("Task.db")
 curs = connect.cursor()
@@ -11,8 +28,8 @@ curs = connect.cursor()
 
 def check_gif_task(number):
     result = []
-    array_on_res = os.listdir("Task-Res\Res")
-    array_on_task = os.listdir("Task-Res\Task")
+    array_on_res = os.listdir(directory.format("Res"))
+    array_on_task = os.listdir(directory.format("Task"))
     array_on_res = list(set(array_on_res) & set(array_on_task))
     array_on_task[:] = array_on_res[:]
     array = []
@@ -30,9 +47,9 @@ def check_gif_task(number):
     if len(result) == 0:
         return 0
     array_on_task = result[random.randint(0, len(result) - 1)]
-
     array_on_task += ".png"
     if array_on_task in array_on_res:
+        creative_file(array_on_task.split('.png')[0])
         return array_on_task.split('.png')[0]
 
 
@@ -75,11 +92,9 @@ def take_values():
 
 
 def check(user_answer, file_name):
-    print(file_name, 1)
     real_answer = curs.execute(f"""
                 SELECT AnswerTask FROM TaskAnswer WHERE LinkTask = {file_name}
         """).fetchall()[0][0]
-    print(real_answer)
     curs.execute(f"""
             UPDATE Statistics SET number_of_tasks = {take_values()[1] + 1} WHERE id = 1
             """)
@@ -99,7 +114,6 @@ def check(user_answer, file_name):
 
 
 def del_in_db(name_task):
-    print(1)
     all_task = curs.execute(f"""
                 SELECT LinkTask FROM TaskAnswer WHERE id >= 1
         """).fetchall()
@@ -170,26 +184,42 @@ def picture_on_lable(self, link):
 
 
 def giv_link_picture(name_task, directory):
-    print(name_file.format(directory, name_task))
     return name_file.format(directory, name_task)
 
 
 def giv_name_task(name_task):
-
     name_task = curs.execute(f"""
                 SELECT name_img FROM Option WHERE id = {name_task}
         """).fetchall()
-    print(name_task)
     if len(name_task) == 0:
         return incorrect_answer
     else:
         return name_task[0][0]
 
+
 def record_answer(text, name_task):
-    print(name_task)
-    print(text)
     curs.execute(f"""
             UPDATE Option SET user_answer = {str(text)} WHERE id = {int(name_task)}
             """)
-    print(1)
     connect.commit()
+
+def creative_file(name_task):
+    file = open(f"file\{'name_task.txt'}", 'w', encoding='utf-8')
+    file.write(str(name_task))
+    file.close()
+    read_file()
+
+def read_file():
+    file = open(f"file\{'name_task.txt'}", 'r', encoding='utf-8')
+    name_task = file.read().splitlines()
+    return name_task[0]
+
+def result_true_answer():
+    array_result = curs.execute(f"""
+                SELECT * FROM Option
+        """).fetchall()
+    result = 0
+    for i in array_result:
+        if str(i[2]) == str(i[3]):
+            result += 1
+    return str(result)

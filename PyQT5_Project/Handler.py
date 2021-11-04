@@ -203,16 +203,19 @@ def record_answer(text, name_task):
             """)
     connect.commit()
 
+
 def creative_file(name_task):
     file = open(f"file\{'name_task.txt'}", 'w', encoding='utf-8')
     file.write(str(name_task))
     file.close()
     read_file()
 
+
 def read_file():
     file = open(f"file\{'name_task.txt'}", 'r', encoding='utf-8')
     name_task = file.read().splitlines()
     return name_task[0]
+
 
 def result_true_answer():
     array_result = curs.execute(f"""

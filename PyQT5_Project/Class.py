@@ -7,8 +7,7 @@ class StartMenuWindow(QMainWindow, Ui_StartMenu):
         self.result = []
         super().__init__()
         self.setupUi(self)  # Загружаем дизайн
-        check_len_db()
-        clear_option_db()
+        self.start_settings()
         self.pushButton.clicked.connect(self.open_task)
 
         self.pushButton_2.clicked.connect(self.open_start_option_window)
@@ -17,6 +16,9 @@ class StartMenuWindow(QMainWindow, Ui_StartMenu):
 
         self.pushButton_3.clicked.connect(self.open_settings)
 
+    def start_settings(self):
+        check_len_db()
+        clear_option_db()
     def open_task(self):
         self.close()
         self.open_task = TaskWindow()
@@ -389,7 +391,6 @@ class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
         self.setupUi(self)
         self.link_task = giv_name_task(name_task)
         self.name_task = name_task
-        print(self.link_task)
         if self.link_task == incorrect_answer:
             self.label.setText(incorrect_answer)
             self.textEdit.setReadOnly(True)
@@ -405,12 +406,11 @@ class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
 
     def record_user_answer(self):
         text = self.textEdit.toPlainText()
-        print(text)
-        if text.isdigit() is False:
-            self.textEdit.setText(incorrect_answer_option)
-        else:
+        try:
             record_answer(text, self.name_task)
             self.textEdit.setText(correct_answer_option)
+        except Exception:
+            self.textEdit.setText(incorrect_answer_option)
 
     def open_fisrt_answer_window(self):
         self.close()

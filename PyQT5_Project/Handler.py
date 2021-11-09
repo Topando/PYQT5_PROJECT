@@ -111,6 +111,11 @@ def read_file():
     return name_task[0]
 
 
+def start_settings():
+    check_len_db()
+    clear_option_db()
+
+
 def result_true_answer():
     array_result = all_in_option_db()
     result = 0

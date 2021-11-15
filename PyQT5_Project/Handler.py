@@ -123,3 +123,12 @@ def result_true_answer():
         if str(i[2]) == str(i[3]):
             result += 1
     return str(result)
+
+
+def get_next_window(self, name_window):
+    def next_window():
+        self.close()
+        self.next_window = name_window()
+        self.next_window.show()
+
+    return next_window

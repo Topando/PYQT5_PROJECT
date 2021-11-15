@@ -1,36 +1,26 @@
 from Handler import *
 
 
-# startmenu
 class StartMenuWindow(QMainWindow, Ui_StartMenu):
     def __init__(self):
         self.result = []
         super().__init__()
         self.setupUi(self)  # Загружаем дизайн
         start_settings()
-        self.pushButton.clicked.connect(self.get_next_window(TaskWindow))
+        self.pushButton.clicked.connect(get_next_window(self, TaskWindow))
 
-        self.pushButton_2.clicked.connect(self.get_next_window(StartOptionWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, StartOptionWindow))
 
-        self.pushButton_4.clicked.connect(self.get_next_window(StatisticsWindow))
+        self.pushButton_4.clicked.connect(get_next_window(self, StatisticsWindow))
 
-        self.pushButton_3.clicked.connect(self.get_next_window(SettingWindow))
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.open_task = name_window()
-            self.open_task.show()
-
-        return next_window
+        self.pushButton_3.clicked.connect(get_next_window(self, SettingWindow))
 
 
-# Task
 class TaskWindow(QMainWindow, Ui_Task):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton_2.clicked.connect(self.get_next_window(StartMenuWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, StartMenuWindow))
         self.pushButton.clicked.connect(self.open_task)
 
     def open_task(self):
@@ -38,18 +28,9 @@ class TaskWindow(QMainWindow, Ui_Task):
         if number_task == 0:
             self.textEdit.setPlainText('некорректный ввод')
         else:
-            self.get_next_window(AnswerWindow)()
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+            get_next_window(self, AnswerWindow)()
 
 
-# openTask
 class AnswerWindow(QMainWindow, Ui_Answer):
     def __init__(self):
         super().__init__()
@@ -57,61 +38,37 @@ class AnswerWindow(QMainWindow, Ui_Answer):
         self.number = read_file()
         self.number_task = giv_link_picture(self.number, "Task")
         picture_on_lable(self, self.number_task)
-        self.pushButton_3.clicked.connect(self.get_next_window(TaskWindow))
+        self.pushButton_3.clicked.connect(get_next_window(self, TaskWindow))
         self.pushButton.clicked.connect(self.check_answer)
-        self.pushButton_2.clicked.connect(self.get_next_window(DecisionWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, DecisionWindow))
 
     def check_answer(self):
         answer_value = check(self.textEdit.toPlainText(), self.number)
         if answer_value:
-            self.get_next_window(CorrectAnswerWindow)()
+            get_next_window(self, CorrectAnswerWindow)()
         else:
-            self.get_next_window(InCorrectAnswerWindow)()
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+            get_next_window(self, InCorrectAnswerWindow)()
 
 
 class CorrectAnswerWindow(QMainWindow, Ui_CorrectAnswer):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton.clicked.connect(self.get_next_window(StartMenuWindow))
-        self.pushButton_2.clicked.connect(self.get_next_window(TaskWindow))
-        self.pushButton_3.clicked.connect(self.get_next_window(StatisticsWindow))
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+        self.pushButton.clicked.connect(get_next_window(self, StartMenuWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, TaskWindow))
+        self.pushButton_3.clicked.connect(get_next_window(self, StatisticsWindow))
 
 
 class InCorrectAnswerWindow(QMainWindow, Ui_InCorrectAnswer):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton.clicked.connect(self.get_next_window(StartMenuWindow))
-        self.pushButton_2.clicked.connect(self.get_next_window(TaskWindow))
-        self.pushButton_3.clicked.connect(self.get_next_window(AnswerWindow))
-        self.pushButton_4.clicked.connect(self.get_next_window(DecisionWindow))
+        self.pushButton.clicked.connect(get_next_window(self, StartMenuWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, TaskWindow))
+        self.pushButton_3.clicked.connect(get_next_window(self, AnswerWindow))
+        self.pushButton_4.clicked.connect(get_next_window(self, DecisionWindow))
         self.task = read_file()
         self.link_task = giv_link_picture(self.task, "Task")
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
 
 
 class DecisionWindow(QMainWindow, Ui_decision):
@@ -121,50 +78,26 @@ class DecisionWindow(QMainWindow, Ui_decision):
         link_task = name_file.format("Res", self.name_task)
         self.setupUi(self)
         picture_on_lable(self, link_task)
-        self.pushButton.clicked.connect(self.get_next_window(TaskWindow))
-        self.pushButton_2.clicked.connect(self.get_next_window(StartMenuWindow))
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+        self.pushButton.clicked.connect(get_next_window(self, TaskWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, StartMenuWindow))
 
 
 class SettingWindow(QMainWindow, Ui_Settings):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton.clicked.connect(self.get_next_window(AddTaskWindow))
-        self.pushButton_2.clicked.connect(self.get_next_window(StartMenuWindow))
-        self.pushButton_3.clicked.connect(self.get_next_window(DelTaskWindow))
-        self.pushButton_4.clicked.connect(self.get_next_window(ResetStatisticsWindow))
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+        self.pushButton.clicked.connect(get_next_window(self, AddTaskWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, StartMenuWindow))
+        self.pushButton_3.clicked.connect(get_next_window(self, DelTaskWindow))
+        self.pushButton_4.clicked.connect(get_next_window(self, ResetStatisticsWindow))
 
 
 class AddTaskWindow(QMainWindow, Ui_AddTask):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton_2.clicked.connect(self.get_next_window(SettingWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, SettingWindow))
         self.pushButton.clicked.connect(self.add_task)
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
 
     def add_task(self):
         file_name = self.textEdit.toPlainText()
@@ -179,39 +112,23 @@ class DelTaskWindow(QMainWindow, Ui_DelTask):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton_2.clicked.connect(self.get_next_window(SettingWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, SettingWindow))
         self.pushButton.clicked.connect(self.del_task)
 
     def del_task(self):
         del_in_db(self.textEdit.toPlainText())
         self.textEdit.setPlainText("Удалено")
 
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
-
 
 class ResetStatisticsWindow(QMainWindow, Ui_ResetStatistics):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton_2.clicked.connect(self.get_next_window(SettingWindow))
+        self.pushButton_2.clicked.connect(get_next_window(self, SettingWindow))
         self.pushButton.clicked.connect(self.reset_statistics)
 
     def reset_statistics(self):
         reset_all_statistics()
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
 
 
 class StatisticsWindow(QMainWindow, Ui_Statistics):
@@ -219,7 +136,7 @@ class StatisticsWindow(QMainWindow, Ui_Statistics):
         super().__init__()
         self.setupUi(self)
         self.get_statistics()
-        self.pushButton.clicked.connect(self.get_next_window(StartMenuWindow))
+        self.pushButton.clicked.connect(get_next_window(self, StartMenuWindow))
 
     def get_statistics(self):
         all_information = getting_statistics()
@@ -234,29 +151,13 @@ class StatisticsWindow(QMainWindow, Ui_Statistics):
         else:
             self.textEdit_4.setPlainText(str(correct_answer / 1))
 
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
-
 
 class StartOptionWindow(QMainWindow, Ui_StartOption):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton_2.clicked.connect(self.get_next_window(StartMenuWindow))
-        self.pushButton.clicked.connect(self.get_next_window(FirstAnswerWindow))
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+        self.pushButton_2.clicked.connect(get_next_window(self, StartMenuWindow))
+        self.pushButton.clicked.connect(get_next_window(self, FirstAnswerWindow))
 
 
 class FirstAnswerWindow(QMainWindow, Ui_FirstAnswerOption):
@@ -264,7 +165,7 @@ class FirstAnswerWindow(QMainWindow, Ui_FirstAnswerOption):
         super().__init__()
 
         self.setupUi(self)
-        self.radioButton_2.clicked.connect(self.get_next_window(SecondAnswerWindow))
+        self.radioButton_2.clicked.connect(get_next_window(self, SecondAnswerWindow))
         self.pushButton.clicked.connect(self.open_answer_option_window)
         self.pushButton_2.clicked.connect(self.open_answer_option_window)
         self.pushButton_3.clicked.connect(self.open_answer_option_window)
@@ -283,14 +184,6 @@ class FirstAnswerWindow(QMainWindow, Ui_FirstAnswerOption):
         self.open_answer_option = AnswerOptionWindow(1, name.split()[1])
         self.open_answer_option.show()
 
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
-
 
 class SecondAnswerWindow(QMainWindow, Ui_SecondAnswerOption):
     def __init__(self):
@@ -306,16 +199,8 @@ class SecondAnswerWindow(QMainWindow, Ui_SecondAnswerOption):
         self.pushButton_8.clicked.connect(self.open_answer_option_window)
         self.pushButton_9.clicked.connect(self.open_answer_option_window)
 
-        self.radioButton.clicked.connect(self.get_next_window(FirstAnswerWindow))
-        self.pushButton_10.clicked.connect(self.get_next_window(ResultOptionWindow))
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+        self.radioButton.clicked.connect(get_next_window(self, FirstAnswerWindow))
+        self.pushButton_10.clicked.connect(get_next_window(self, ResultOptionWindow))
 
     def open_answer_option_window(self):
         name = self.sender().text()
@@ -329,15 +214,7 @@ class ResultOptionWindow(QMainWindow, Ui_ResultOption):
         super().__init__()
         self.setupUi(self)
         self.textEdit.setText(result_true_answer())
-        self.pushButton.clicked.connect(self.get_next_window(StartMenuWindow))
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window
+        self.pushButton.clicked.connect(get_next_window(self, StartMenuWindow))
 
 
 class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
@@ -354,9 +231,9 @@ class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
             picture_on_lable(self, giv_link_picture(self.link_task, "Task"))
 
         if number_window == 1:
-            self.pushButton_2.clicked.connect(self.get_next_window(FirstAnswerWindow))
+            self.pushButton_2.clicked.connect(get_next_window(self, FirstAnswerWindow))
         elif number_window == 2:
-            self.pushButton_2.clicked.connect(self.get_next_window(SecondAnswerWindow))
+            self.pushButton_2.clicked.connect(get_next_window(self, SecondAnswerWindow))
         self.pushButton.clicked.connect(self.record_user_answer)
 
     def record_user_answer(self):
@@ -366,11 +243,3 @@ class AnswerOptionWindow(QMainWindow, Ui_AnswerOption):
             self.textEdit.setText(correct_answer_option)
         except Exception:
             self.textEdit.setText(incorrect_answer_option)
-
-    def get_next_window(self, name_window):
-        def next_window():
-            self.close()
-            self.next_window = name_window()
-            self.next_window.show()
-
-        return next_window

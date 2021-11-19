@@ -1,5 +1,6 @@
 import sqlite3
 from Handler import *
+
 connect = sqlite3.connect("Task.db")
 curs = connect.cursor()
 
@@ -69,12 +70,10 @@ def check(user_answer, file_name):
 
 
 def del_in_db(name_task):
-    all_task = curs.execute(f"""
-                SELECT LinkTask FROM TaskAnswer WHERE id >= 1
-        """).fetchall()
-    all_task = list_link_task(all_task)
-    if name_task in all_task:
+    try:
         curs.execute(f"""DELETE FROM TaskAnswer WHERE LinkTask == {name_task}""")
+    except Exception:
+        pass
     connect.commit()
 
 
@@ -88,9 +87,6 @@ def getting_statistics():
 def reset_all_statistics():
     curs.execute(f"""DELETE FROM Statistics WHERE id == 1""")
     connect.commit()
-
-
-
 
 
 def clear_option_db():

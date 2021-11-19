@@ -1,4 +1,5 @@
 from Handler import *
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
 
 
 class StartMenuWindow(QMainWindow, Ui_StartMenu):
@@ -14,6 +15,9 @@ class StartMenuWindow(QMainWindow, Ui_StartMenu):
         self.pushButton_4.clicked.connect(get_next_window(self, StatisticsWindow))
 
         self.pushButton_3.clicked.connect(get_next_window(self, SettingWindow))
+
+
+
 
 
 class TaskWindow(QMainWindow, Ui_Task):

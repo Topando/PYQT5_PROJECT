@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>732</width>
+    <width>733</width>
     <height>598</height>
    </rect>
   </property>
@@ -20,17 +20,43 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>711</width>
-      <height>431</height>
+      <y>510</y>
+      <width>171</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>отправить на проверку</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>500</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Вернуться к заданиям</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>450</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Показать решение</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -56,43 +82,17 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>510</y>
-      <width>171</width>
-      <height>41</height>
+      <y>10</y>
+      <width>711</width>
+      <height>431</height>
      </rect>
     </property>
     <property name="text">
-     <string>отправить на проверку</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>450</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Показать решение</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>500</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Вернуться к заданиям</string>
+     <string/>
     </property>
    </widget>
   </widget>
@@ -101,7 +101,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>732</width>
+     <width>733</width>
      <height>25</height>
     </rect>
    </property>

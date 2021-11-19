@@ -46,14 +46,16 @@ def check_gif_task(number):
         return 0
     array_on_task = result[random.randint(0, len(result) - 1)]
     array_on_task += ".png"
+    print(array_on_res, array_on_task)
     if array_on_task in array_on_res:
         creative_file(array_on_task.split('.png')[0])
         return array_on_task.split('.png')[0]
 
 
-def list_link_task(array):
+def list_link_task(*array):
+    print(array)
     result_list = []
-    for i in array:
+    for i in array[0]:
         result_list.append(i[0])
     return result_list
 
@@ -69,7 +71,9 @@ def check_len_option_db():
 def add_in_option_db():
     for i in range(1, 20):
         name_task = check_gif_task(int(i))
+        print(name_task)
         if name_task != 0 and int(i) == int(name_task.split('.')[0]):
+            print(1)
             take_and_insert_answer_img(name_task)
 
 
@@ -77,6 +81,7 @@ def picture_on_lable(self, link):
     link_task = link + ".png"
     width = self.label.width()
     height = self.label.height()
+    print(width, height, link_task)
     image = Image.open(link_task)
     size = (width, height - 100)
     im = image.resize(size)
